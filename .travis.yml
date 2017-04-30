@@ -1,0 +1,25 @@
+language: php
+php:
+  - '7.0'
+env:
+  - TRAVIS_NODE_VERSION="4"
+before_script:
+  - phpenv config-rm xdebug.ini
+  - cp .env.travis .env
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+script:
+  - mkdir -p build/logs
+  - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.xml
+after_script:
+  - php vendor/bin/coveralls -v
+branches:
+  only:
+  - master
+  - development
+  - stable
+cache:
+  directories:
+  - node_modules
+  - vendor
