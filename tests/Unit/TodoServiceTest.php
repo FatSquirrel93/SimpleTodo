@@ -37,7 +37,7 @@ class TodoServiceTest extends TestCase
 
         $this->mock->shouldReceive('save')->once()->with($mockedTodo)->andReturn(true);
 
-        $this->assertTrue($this->sut->save($mockedTodo));
+        $this->assertFalse($this->sut->save($mockedTodo));
     }
 
     public function testDelete_willCallRepository_withGivenParameters()
